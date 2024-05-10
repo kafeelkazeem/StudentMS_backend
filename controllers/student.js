@@ -1,44 +1,81 @@
 const Student = require('../models/student')
 
 exports.getDashBoard = (req, res, next) =>{
-    res.json({message: 'hello'})
+    let totalStudent;
+    let totalStudentPaid;
+    let totalStudentNotPaid;
+    let totalStudentOwing;
+
+    Student.findAll()
+    .then(result =>{
+        totalStudent = result.length
+        return  Student.findAll({where : {status: 'paid'}})
+    })
+    .then(result =>{
+        totalStudentPaid = result.length
+        return Student.findAll({where : {status: 'not paid'}})
+    })
+    .then(result =>{
+        totalStudentNotPaid = result.length
+        return Student.findAll({where: {status: 'owing'}})
+    })
+    .then(result =>{
+        totalStudentOwing = result.length
+        res.json({
+            totalStudent: totalStudent, 
+            totalStudentPaid: totalStudentPaid, 
+            totalStudentNotPaid: totalStudentNotPaid, 
+            totalStudentOwing: totalStudentOwing
+        })
+    })
+    .catch(err =>{
+        console.log(err)
+    })   
 }
 
 exports.postAddStudent = (req, res, next) =>{
-    console.log(req.body.name)
-    // const student = {
-    //     fullName : req.body.fullName,
-    //     age: req.body.age,
-    //     dob : req.body.dob,
-    //     cls : req.body.cls,
-    //     section : req.body.section,
-    //     gender : req.body.gender,
-    //     parentName : req.body.parentName,
-    //     PhoneNumber : req.body.PhoneNumber,
-    //     address : req.body.address,
-    //     status : req.body.status,
-    //     paid : req.body.paid,
-    //     owing : req.body.owing
-    // }
-    //res.json({message: student.fullName})
-    // Student.create({
-    //     fullName : student.fullName,
-    //     age: student.age,
-    //     dob : student.dob,
-    //     cls : student.cls,
-    //     section : student.section,
-    //     gender : student.gender,
-    //     parentName : student.parentName,
-    //     PhoneNumber : student.PhoneNumber,
-    //     address : student.address,
-    //     status : student.status,
-    //     paid : student.paid,
-    //     owing : student.owing
-    // })
-    // .then(result =>{
-    //     res.json({message : true})
-    // })
-    // .catch(err =>{
-    //     res.json({message: false})
-    // })
+    const student = {
+        fullName : req.body.fullName,
+        age: req.body.age,
+        dob : req.body.dob,
+        class : req.body.cls,
+        section : req.body.section,
+        gender : req.body.gender,
+        parentName : req.body.parentName,
+        PhoneNumber : req.body.PhoneNumber,
+        address : req.body.address,
+        status : req.body.status,
+        paid : req.body.paid,
+        owing : req.body.owing
+    }
+    Student.create(student)
+    .then(result =>{
+        res.json({message : true})
+    })
+    .catch(err =>{
+        console.log(err)
+        res.json({message: false})
+    })
+}
+
+exports.getAllStudent = (req, res, next) =>{
+    Student.findAll()
+    .then(result =>{
+        let num = result.length
+        res.json({amount: num})
+    })
+    .catch(err =>{
+        console.log(err)
+    })   
+}
+
+exports.getClass = (req, res, next) =>{
+    const cls = req.query.class
+    Student.findAll({attributes : ['fullName', 'age', 'gender', 'status', 'paid', 'owing'], where : {class: cls}})
+    .then(result =>{
+        res.json(result)
+    })
+    .catch(err =>{
+        console.log(err)
+    })
 }
