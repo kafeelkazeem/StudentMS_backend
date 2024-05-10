@@ -5,4 +5,6 @@ const studentController = require('../controllers/student')
 
 router.get('/', studentController.getDashBoard)
 
+router.post('/addStudent', studentController.postAddStudent)
+
 module.exports = router

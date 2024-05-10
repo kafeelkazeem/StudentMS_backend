@@ -1,11 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const sequelize = require('./util/database')
 
 const route = require('./route/appRoute')
 
 const app = express()
 
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
 
 app.use((req, res, next) => {
     // Allow requests from all origins
@@ -20,4 +23,10 @@ app.use((req, res, next) => {
 
 app.use('/api', route)
 
-app.listen(3000)
+sequelize.sync()
+.then(result =>{
+    app.listen(3000)
+})
+.catch(err =>{
+    console.log(err)
+})
