@@ -8,7 +8,8 @@ const Student = sequelize.define('student', {
         autoIncrement: true,
         primaryKey: true
     },
-    fullName : Sequelize.STRING,
+    firstName : Sequelize.STRING,
+    lastName: Sequelize.STRING,
     age: Sequelize.INTEGER,
     DOB: Sequelize.DATE,
     class: Sequelize.STRING,

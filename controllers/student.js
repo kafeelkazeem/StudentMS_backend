@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const Student = require('../models/student')
 
 exports.getDashBoard = (req, res, next) =>{
@@ -35,7 +36,8 @@ exports.getDashBoard = (req, res, next) =>{
 
 exports.postAddStudent = (req, res, next) =>{
     const student = {
-        fullName : req.body.fullName,
+        firstName : req.body.firstName,
+        lastName: req.body.lastName,
         age: req.body.age,
         dob : req.body.dob,
         class : req.body.cls,
@@ -69,9 +71,51 @@ exports.getAllStudent = (req, res, next) =>{
     })   
 }
 
-exports.getClass = (req, res, next) =>{
+exports.getAll = (req, res, next) =>{
     const cls = req.query.class
-    Student.findAll({attributes : ['fullName', 'age', 'gender', 'status', 'paid', 'owing'], where : {class: cls}})
+    Student.findAll({attributes : ['id', 'firstName', 'lastName', 'age', 'gender', 'status', 'paid', 'owing'], where : {class: cls}})
+    .then(result =>{
+        res.json(result)
+    })
+    .catch(err =>{
+        console.log(err)
+    })
+}
+
+exports.getPaid = (req, res, next) =>{
+    const cls  = req.query.class
+    Student.findAll({attributes : ['id', 'firstName', 'lastName', 'age', 'gender', 'status', 'paid', 'owing'], where : {
+        class: cls,
+        status: 'paid'
+    }})
+    .then(result =>{
+        res.json(result)
+    })
+    .catch(err =>{
+        console.log(err)
+    })
+}
+
+exports.getOwing = (req, res, next) =>{
+    const cls  = req.query.class
+    Student.findAll({attributes : ['id', 'firstName', 'lastName', 'age', 'gender', 'status', 'paid', 'owing'], where : {
+        class: cls,
+        status: 'owing'
+    }})
+    .then(result =>{
+        res.json(result)
+    })
+    .catch(err =>{
+        console.log(err)
+    })
+}
+
+exports.getNotPaid = (req, res, next) =>{
+    const cls  = req.query.class
+    Student.findAll({attributes : ['id', 'firstName', 'lastName', 'age', 'gender', 'status', 'paid', 'owing'], where : {
+        class: cls,
+        status: 'not paid'
+    }})
     .then(result =>{
         res.json(result)
     })

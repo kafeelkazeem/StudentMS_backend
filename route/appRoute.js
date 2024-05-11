@@ -9,6 +9,12 @@ router.post('/addStudent', studentController.postAddStudent)
 
 router.get('/allStudent', studentController.getAllStudent)
 
-router.get('/getClass', studentController.getClass)
+router.get('/getAll', studentController.getAll)
+
+router.get('/getPaid', studentController.getPaid)
+
+router.get('/getOwing', studentController.getOwing)
+
+router.get('/getNotPaid', studentController.getNotPaid)
 
 module.exports = router
