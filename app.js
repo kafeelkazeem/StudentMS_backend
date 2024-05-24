@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
 const route = require('./route/appRoute')
 
@@ -20,4 +21,8 @@ app.use((req, res, next) => {
 
 app.use('/api', route)
 
-app.listen(3000)
+mongoose.connect('mongodb+srv://kafeelkazeem:78789898@cluster0.8ynp2ef.mongodb.net/?retryWrites=true&w=majority&appName=Cluster')
+.then(res => {
+    app.listen(3000)
+})
+.catch(err => console.log(err))
