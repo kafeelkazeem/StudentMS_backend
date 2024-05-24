@@ -43,22 +43,22 @@ exports.postAddStudent = (req, res, next) =>{
         section : req.body.section,
         gender : req.body.gender,
         parentName : req.body.parentName,
-        PhoneNumber : req.body.PhoneNumber,
+        phoneNumber : req.body.phoneNumber,
         address : req.body.address,
         status : req.body.status,
         paid : req.body.paid,
         owing : req.body.owing
     }
-    console.log(req.body.firstName)
-    // const student = new Student(studentObj)
-    // student.save()
-    // .then(result =>{
-    //     res.json({message : true})
-    // })
-    // .catch(err =>{
-    //     console.log(err)
-    //     res.json({message: false})
-    // })
+    const student = new Student(studentObj)
+    student.save()
+    .then(result =>{
+        console.log('saved')
+        res.json({message : true})
+    })
+    .catch(err =>{
+        console.log(err)
+        res.json({message: false})
+    })
 }
 
 // exports.getAllStudent = (req, res, next) =>{

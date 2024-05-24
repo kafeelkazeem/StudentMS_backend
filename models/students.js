@@ -33,7 +33,6 @@ const StudentSchema = new Schema({
     },
     phoneNumber: {
         type: String,
-        required: true
     },
     address: {
         type: String,
