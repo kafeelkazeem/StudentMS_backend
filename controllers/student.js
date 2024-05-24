@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const Student = require('../models/student')
 
 exports.getDashBoard = (req, res, next) =>{
@@ -116,6 +115,17 @@ exports.getNotPaid = (req, res, next) =>{
         class: cls,
         status: 'not paid'
     }})
+    .then(result =>{
+        res.json(result)
+    })
+    .catch(err =>{
+        console.log(err)
+    })
+}
+
+exports.getSingleStudent = (req, res, next) =>{
+    const id = req.query.id
+    Student.findByPk(id)
     .then(result =>{
         res.json(result)
     })

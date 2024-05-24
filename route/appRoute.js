@@ -17,4 +17,6 @@ router.get('/getOwing', studentController.getOwing)
 
 router.get('/getNotPaid', studentController.getNotPaid)
 
+router.get('/getSingleStudent', studentController.getSingleStudent)
+
 module.exports = router
