@@ -1,4 +1,4 @@
-const Student = require('../models/student')
+const Student = require('../models/students')
 
 // exports.getDashBoard = (req, res, next) =>{
 //     let totalStudent;
@@ -34,7 +34,7 @@ const Student = require('../models/student')
 // }
 
 exports.postAddStudent = (req, res, next) =>{
-    const student = {
+    const studentObj = {
         firstName : req.body.firstName,
         lastName: req.body.lastName,
         age: req.body.age,
@@ -49,14 +49,16 @@ exports.postAddStudent = (req, res, next) =>{
         paid : req.body.paid,
         owing : req.body.owing
     }
-    Student.create(student)
-    .then(result =>{
-        res.json({message : true})
-    })
-    .catch(err =>{
-        console.log(err)
-        res.json({message: false})
-    })
+    console.log(req.body.firstName)
+    // const student = new Student(studentObj)
+    // student.save()
+    // .then(result =>{
+    //     res.json({message : true})
+    // })
+    // .catch(err =>{
+    //     console.log(err)
+    //     res.json({message: false})
+    // })
 }
 
 // exports.getAllStudent = (req, res, next) =>{
