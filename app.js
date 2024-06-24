@@ -1,11 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
 const route = require('./route/appRoute')
 
 const app = express()
 
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
 
 app.use((req, res, next) => {
     // Allow requests from all origins
@@ -20,4 +23,8 @@ app.use((req, res, next) => {
 
 app.use('/api', route)
 
-app.listen(3000)
+mongoose.connect('mongodb+srv://kafeelkazeem:78789898@cluster0.8ynp2ef.mongodb.net/?retryWrites=true&w=majority&appName=Cluster')
+.then(res => {
+    app.listen(3000)
+})
+.catch(err => console.log(err))
